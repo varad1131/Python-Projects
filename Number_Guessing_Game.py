@@ -1,38 +1,57 @@
-import random
+import java.util.Random;
+import java.util.Scanner;
 
-min_range = 1
-max_range = 100
-attempts_limit = 10
-score = 0
+class Number_Guessing_Game{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
-print("Welcome to the Number Guessing Game!")
+        int minRange = 1;
+        int maxRange = 100;
+        int attemptsLimit = 10;
+        int score = 0;
 
-while True:
-    # Generate random number
-    generated_number = random.randint(min_range, max_range)
+        System.out.println("Welcome to the Number Guessing Game!");
 
-    print(f"\nGuess the number between {min_range} and {max_range}")
+        do {
+            
+            int generatedNumber = random.nextInt(maxRange - minRange + 1) + minRange;
 
-    for attempt in range(1, attempts_limit + 1):
-        user_guess = int(input(f"Attempt {attempt}: "))
+           
+            System.out.println("\nGUESS THE NUMBER BETWEEN " + minRange + " AND " + maxRange + ":");
+            
+            for (int attempts = 1; attempts <= attemptsLimit; attempts++) {
+                System.out.print("ATTEMPT " + attempts + ": ");
+                int userGuess = scanner.nextInt();
 
-        if user_guess == generated_number:
-            print("Congratulations! You guessed the correct number.")
-            score += 1
-            break
+                
+                if (userGuess == generatedNumber) {
+                    System.out.println("KUDOS ! YOU HAVE GUESSED THE ACCURATE NUMBER.");
+                    score += attempts;
+                    break;
+                } else if (userGuess < generatedNumber) {
+                    System.out.println("TOO LOW. GIVE ANOTHER TRY.");
+                } else {
+                    System.out.println("TOO HIGH. GIVE ANOTHER TRY.");
+                }
 
-        elif user_guess < generated_number:
-            print("Too low! Try again.")
+                if (attempts == attemptsLimit) {
+                    System.out.println("SORRY, YOU HAVE ATTEMPTED MAXIMUM NUMBER OF TRIES. THE EXACT NUMBER WAS: " + generatedNumber);
+                }
+            }
 
-        else:
-            print("Too high! Try again.")
+          
+            System.out.print("DO YOU WANT TO TRY AGAIN ? (YES/NO): ");
+            String playAgain = scanner.next().toLowerCase();
 
-        if attempt == attempts_limit:
-            print(f"Sorry! The correct number was {generated_number}")
+            if (playAgain.equals("NO")) {
+                break;
+            }
+        } while (true);
 
-    play_again = input("Do you want to play again? (yes/no): ").lower()
+       
+        System.out.println("YOU HAVE SCORED: " + score);
 
-    if play_again != "yes":
-        break
-
-print("Your final score is:", score)
+        scanner.close();
+    }
+}
